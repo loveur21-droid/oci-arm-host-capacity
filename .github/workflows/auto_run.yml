@@ -27,6 +27,7 @@ jobs:
           OCI_REGION: ${{ secrets.OCI_REGION }}
           OCI_FINGERPRINT: ${{ secrets.OCI_FINGERPRINT }}
           OCI_PRIVATE_KEY_FILENAME: "oracle_private.pem" # 👈 ここで直接ファイル名を引き渡すことで、PHPに確実に文字列が届きます
+          OCI_SHAPE: "VM.Standard.A1.Flex"
           OCI_SUBNET_ID: ${{ secrets.OCI_SUBNET_ID }}
           OCI_IMAGE_ID: ${{ secrets.OCI_IMAGE_ID }}
           OCI_AVAILABILITY_DOMAIN: ${{ secrets.OCI_AVAILABILITY_DOMAIN }}
