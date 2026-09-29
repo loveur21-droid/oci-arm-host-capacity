@@ -35,4 +35,7 @@ jobs:
           OCI_MEMORY_IN_GBS: ${{ vars.OCI_MEMORY_IN_GBS }}
           OCI_BOOT_VOLUME_SIZE_IN_GBS: ${{ vars.OCI_BOOT_VOLUME_SIZE_IN_GBS }}
           OCI_SSH_PUBLIC_KEY: ${{ vars.OCI_SSH_PUBLIC_KEY }}
-        run: php index.php
+      run: |
+        echo "OCI_PRIVATE_KEY_FILENAME=oracle_private.pem" >> $GITHUB_ENV
+        echo "${{ secrets.OCI_PRIVATE_KEY }}" > oracle_private.pem
+        php index.php
