@@ -1,0 +1,38 @@
+name: OCI Instance Auto Creation
+
+on:
+  schedule:
+    # 5分ごとに自動実行する設定（混雑状況によって多少前後します）
+    - cron: '*/5 * * * *'
+  workflow_dispatch: # 手動でいつでも起動できるようにするボタン
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: Run Script
+        env:
+          OCI_USER_ID: ${{ secrets.OCI_USER_ID }}
+          OCI_TENANCY_ID: ${{ secrets.OCI_TENANCY_ID }}
+          OCI_REGION: ${{ secrets.OCI_REGION }}
+          OCI_FINGERPRINT: ${{ secrets.OCI_FINGERPRINT }}
+          OCI_PRIVATE_KEY: ${{ secrets.OCI_PRIVATE_KEY }}
+          OCI_SUBNET_ID: ${{ secrets.OCI_SUBNET_ID }}
+          OCI_IMAGE_ID: ${{ secrets.OCI_IMAGE_ID }}
+          OCI_AVAILABILITY_DOMAIN: ${{ secrets.OCI_AVAILABILITY_DOMAIN }}
+          OCI_OCPUS: ${{ vars.OCI_OCPUS }}
+          OCI_MEMORY_IN_GBS: ${{ vars.OCI_MEMORY_IN_GBS }}
+          OCI_BOOT_VOLUME_SIZE_IN_GBS: ${{ vars.OCI_BOOT_VOLUME_SIZE_IN_GBS }}
+          OCI_SSH_PUBLIC_KEY: ${{ vars.OCI_SSH_PUBLIC_KEY }}
+        run: php index.php
