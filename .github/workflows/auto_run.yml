@@ -26,7 +26,7 @@ jobs:
           OCI_TENANCY_ID: ${{ secrets.OCI_TENANCY_ID }}
           OCI_REGION: ${{ secrets.OCI_REGION }}
           OCI_FINGERPRINT: ${{ secrets.OCI_FINGERPRINT }}
-          OCI_PRIVATE_KEY: ${{ secrets.OCI_PRIVATE_KEY }}
+          OCI_PRIVATE_KEY_FILENAME: "oracle_private.pem" # 👈 ここで直接ファイル名を引き渡すことで、PHPに確実に文字列が届きます
           OCI_SUBNET_ID: ${{ secrets.OCI_SUBNET_ID }}
           OCI_IMAGE_ID: ${{ secrets.OCI_IMAGE_ID }}
           OCI_AVAILABILITY_DOMAIN: ${{ secrets.OCI_AVAILABILITY_DOMAIN }}
@@ -35,6 +35,5 @@ jobs:
           OCI_BOOT_VOLUME_SIZE_IN_GBS: ${{ vars.OCI_BOOT_VOLUME_SIZE_IN_GBS }}
           OCI_SSH_PUBLIC_KEY: ${{ vars.OCI_SSH_PUBLIC_KEY }}
         run: |
-          echo "OCI_PRIVATE_KEY_FILENAME=oracle_private.pem" >> $GITHUB_ENV
           echo "${{ secrets.OCI_PRIVATE_KEY }}" > oracle_private.pem
           php index.php
